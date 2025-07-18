@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /
+
+Sitemap: https://cryptozor.ru/sitemap.xml
+
+Crawl-delay: 10
