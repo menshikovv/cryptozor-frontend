@@ -47,7 +47,10 @@ export default function CurrentPageLabel({ tags = [], categories = [], articleTi
   const textRef = useRef<HTMLSpanElement>(null)
 
   return (
-    <div className="flex flex-col items-center tablet-small:items-start">
+    <div
+      className="flex flex-col items-center tablet-small:items-start"
+      style={isMobile ? { marginLeft: '2px' } : undefined}
+    >
       {pageName && (pageName.startsWith('Выбранная категория') || pageName.startsWith('Выбранная тема')) ? (
         <span className="font-medium text-sm text-center tablet-small:text-left relative">
           {!isMobile && (
