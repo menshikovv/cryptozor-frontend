@@ -47,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getGlobal()
 
   return {
-    title: seo?.title_tag || 'Mentup News',
+    title: seo?.title_tag || 'CryptoZor.Ru',
     description: seo?.meta_description || 'Новости и статьи о технологиях, бизнесе и инновациях',
     keywords: seo?.meta_keywords?.split(',').map((k: string) => k.trim()),
 
