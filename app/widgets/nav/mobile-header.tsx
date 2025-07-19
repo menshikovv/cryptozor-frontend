@@ -28,10 +28,10 @@ export default function MobileHeader({
       >
         <Link href="/" className="flex flex-row items-center -ml-4">
           <Image
-            width={90}
-            height={72}
+            width={110}
+            height={80}
             className={
-              'max-h-[72px] min-h-[72px] max-w-[90px] min-w-[90px]'
+              'max-h-[80px] min-h-[80px] max-w-[110px] min-w-[110px]'
             }
             src="/logo.svg"
             alt="Logo"

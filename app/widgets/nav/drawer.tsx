@@ -150,9 +150,9 @@ export function Drawer({ tags, categories, socials }: DrawerProps) {
               >
                 <Link href="/about">
                   <Image
-                    className={'w-[50px] h-[50px]'}
-                    width={50}
-                    height={50}
+                    className={'w-[65px] h-[65px]'}
+                    width={65}
+                    height={65}
                     src="/logo.svg"
                     alt="Logo"
                   />

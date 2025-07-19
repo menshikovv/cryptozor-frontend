@@ -13,7 +13,7 @@ export default function CurrentPageLabel({ tags = [], categories = [], articleTi
   }, [])
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 640)
+    const checkMobile = () => setIsMobile(window.innerWidth <= 960)
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
@@ -38,7 +38,7 @@ export default function CurrentPageLabel({ tags = [], categories = [], articleTi
       const match = pathname.match(/^\/tag\/([^\/]+)/)
       if (match && tags && tags.length > 0) {
         const tag = tags.find((t: any) => t.slug === match[1])
-        if (tag) return `Выбарнный тег: ${tag.title}`
+        if (tag) return `Выбранная тема: ${tag.title}`
       }
       return 'Тег';
     }
@@ -48,15 +48,19 @@ export default function CurrentPageLabel({ tags = [], categories = [], articleTi
 
   return (
     <div className="flex flex-col items-center tablet-small:items-start">
-      {pageName && (pageName.startsWith('Выбранная категория') || pageName.startsWith('Выбарнный тег')) ? (
+      {pageName && (pageName.startsWith('Выбранная категория') || pageName.startsWith('Выбранная тема')) ? (
         <span className="font-medium text-sm text-center tablet-small:text-left relative">
-          <span className="text-gray-400">
-            {pageName.startsWith('Выбранная категория')
-              ? 'Выбранная категория: '
-              : ''}
-          </span>
+          {!isMobile && (
+            <span className="text-gray-400">
+              {pageName.startsWith('Выбранная категория')
+                ? 'Выбранная категория: '
+                : pageName.startsWith('Выбранная тема')
+                ? 'Выбранная тема: '
+                : ''}
+            </span>
+          )}
           <span className="text-white relative inline-block after:content-[''] after:block after:mt-2 after:h-0.5 after:rounded after:bg-gradient-to-r after:from-[#D9D9D9] after:to-[#75BE40] after:w-full">
-            {pageName.replace(/^Выбранная категория: |^Выбарнный тег: /, '')}
+            {pageName.replace(/^Выбранная категория: |^Выбранная тема: /, '')}
           </span>
         </span>
       ) : (
@@ -71,7 +75,7 @@ export default function CurrentPageLabel({ tags = [], categories = [], articleTi
                 : ''}
             </span>
             <span className="text-white">
-              {pageName.replace(/^Выбранная категория: |^Выбарнный тег: /, '')}
+              {pageName.replace(/^Выбранная категория: |^ Выбранная тема: /, '')}
             </span>
           </span>
         )
