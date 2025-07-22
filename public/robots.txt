@@ -1,5 +1,21 @@
 User-agent: *
-Disallow: /
+Allow: /
+
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /*.ico$
+
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.svg$
+Allow: /*.gif$
+Allow: /*.webp$
 
 Sitemap: https://cryptozor.ru/sitemap.xml
 

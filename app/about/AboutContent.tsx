@@ -9,11 +9,10 @@ export default function AboutContent() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen py-5 bg-[#0F0F15]"
+      className="min-h-screen bg-[#0F0F15]"
     >
       <div className="max-w-4xl mx-auto">
         <motion.div
-          whileHover={{ scale: 1.02 }}
           className="bg-gradient-to-br from-[#101c13] via-[#0F0F15] to-[#1a2e1a] rounded-3xl p-8 shadow-2xl border border-[#75BE40]/30 overflow-hidden relative"
         >
           <div className="absolute inset-0 pointer-events-none z-0" style={{background: 'radial-gradient(circle at 80% 20%, rgba(117,190,64,0.15) 0%, transparent 70%)'}} />

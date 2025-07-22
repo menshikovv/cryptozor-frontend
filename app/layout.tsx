@@ -131,17 +131,25 @@ export default async function RootLayout({
           name="html-seo-description"
           content={html_seo_description.toString()}
         />
-        <meta name="yandex-verification" content="063c722d164a624d" />
-        {/* Удалён Yandex.RTB Loader */}
-        {/* <script dangerouslySetInnerHTML={{ __html: 'window.yaContextCb=window.yaContextCb||[]' }} /> */}
-        {/* <Script src="https://yandex.ru/ads/system/context.js" strategy="afterInteractive" async /> */}
+        <meta name="yandex-verification" content="7b9defedb9698895" />
+        <script dangerouslySetInnerHTML={{ __html: 'window.yaContextCb=window.yaContextCb||[]' }} />
+        <script src="https://yandex.ru/ads/system/context.js" async />
+        <Script id="gtm-head" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-W43XG9MK');
+          `}
+        </Script>
       </head>
       <body className={`${inter.className} min-h-screen antialiased`}>
         <LoadingIndicator />
         <Suspense fallback={<GlobalLoadingIndicator />}>
           <Drawer tags={tags} categories={categories} socials={socials} />
           <SearchModal tags={tags} />
-          <div className="tablet-small:px-5 tablet:grid-cols-[300px_1fr_300px] tablet-small:grid-cols-[300px_1fr] relative mx-auto grid min-h-screen max-w-[1440px] grid-cols-[1fr] px-4">
+          <div className="tablet-small:px-5 tablet:grid-cols-[300px_1fr_300px] tablet-small:grid-cols-[300px_1fr] relative mx-auto grid min-h-screen h-screen max-w-[1440px] grid-cols-[1fr] px-4">
             <Sidebar tags={tags} categories={categories} />
             <div className="flex flex-col">
               <Header tags={tags} categories={categories} />
@@ -167,26 +175,29 @@ export default async function RootLayout({
         
         <Script id="yandex-metrika" strategy="afterInteractive">
           {`
-            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {
-              if (document.scripts[j].src === r) { return; }
-            }
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-            })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+            (function(m,e,t,r,i,k,a){
+                m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                m[i].l=1*new Date();
+                for (var j = 0; j < document.scripts.length; j++) {
+                  if (document.scripts[j].src === r) { return; }
+                }
+                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+            })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=103425474", "ym");
 
-            ym(102231794, "init", {
+            ym(103425474, 'init', {
+                ssr:true,
+                webvisor:true,
                 clickmap:true,
-                trackLinks:true,
+                ecommerce:"dataLayer",
                 accurateTrackBounce:true,
-                webvisor:true
+                trackLinks:true
             });
           `}
         </Script>
         <noscript>
           <div>
             <img
-              src="https://mc.yandex.ru/watch/102231794"
+              src="https://mc.yandex.ru/watch/103425474"
               style={{ position: 'absolute', left: '-9999px' }}
               alt=""
             />
@@ -205,6 +216,9 @@ export default async function RootLayout({
             gtag('config', 'G-C6DHB3DCBR');
           `}
         </Script>
+        <noscript>
+          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W43XG9MK" height="0" width="0" style={{display:'none',visibility:'hidden'}}></iframe>
+        </noscript>
       </body>
     </html>
   )

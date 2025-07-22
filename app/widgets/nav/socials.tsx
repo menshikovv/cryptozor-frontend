@@ -67,6 +67,20 @@ function SocialCard({
 }
 
 export function Socials({ socials }: SocialsProps) {
+  useEffect(() => {
+    if (window.yaContextCb) {
+      window.yaContextCb.push(() => {
+        const container = document.getElementById("yandex_rtb_R-A-16335060-1");
+        if (container && window.Ya?.Context?.AdvManager) {
+          window.Ya.Context.AdvManager.render({
+            blockId: "R-A-16335060-1",
+            renderTo: "yandex_rtb_R-A-16335060-1"
+          });
+        }
+      });
+    }
+  }, []);
+
   return (
     <div className="tablet:flex col-span-1 hidden flex-col pb-5">
       <SearchInput className={'bg-bg sticky top-0 h-20'} value={''} />
@@ -94,6 +108,8 @@ export function Socials({ socials }: SocialsProps) {
           buttonGradient="bg-gradient-to-r from-black via-[#444444] to-[#75BE40]"
         />
       </div>
+      {/* Yandex.RTB R-A-16335060-1 */}
+      <div id="yandex_rtb_R-A-16335060-1"></div>
     </div>
   )
 }

@@ -39,7 +39,7 @@ export function Sidebar({ tags, categories }: SidebarProps) {
     .sort((a, b) => tagOrder.indexOf(a.title) - tagOrder.indexOf(b.title));
 
   return (
-    <aside className="tablet-small:flex sticky top-0 col-span-1 hidden h-screen flex-col justify-between py-2">
+    <aside className="tablet-small:flex sticky top-0 col-span-1 hidden h-screen h-full flex-col justify-between py-2">
       <Link
         href="/"  
         className="flex h-[84px] flex-row items-center pl-0 pr-4"
