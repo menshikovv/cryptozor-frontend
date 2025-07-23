@@ -136,12 +136,12 @@ export default function ArticlesList({
     return (
       <div
         className={
-          'tablet-small:gap-5 tablet-small:grid-cols-2 tablet:grid-cols-3 grid w-full grid-cols-2 gap-3'
+          'tablet-small:gap-5 tablet-small:grid-cols-2 tablet:grid-cols-3 grid w-full grid-cols-2 gap-3 items-stretch'
         }
       >
         {filteredArticles.map((article) => (
-          <Link key={article.id} href={`/article/${article.slug}`}>
-            <ArticleCard article={article} isLarge={false} />
+          <Link key={article.id} href={`/article/${article.slug}`} className="h-full">
+            <ArticleCard article={article} isLarge={false} className="h-full" />
           </Link>
         ))}
         {Array(skeletonCount)
@@ -172,12 +172,12 @@ export default function ArticlesList({
 
   return (
     <div className="tablet-small:gap-5 flex w-full flex-col gap-3">
-      <div className="tablet-small:grid-cols-2 tablet-small:gap-5 grid w-full grid-cols-1 gap-3">
+      <div className="tablet-small:grid-cols-2 tablet-small:gap-5 grid w-full grid-cols-1 gap-3 items-stretch">
         {[first, second].map(
           (article) =>
             article && (
-              <Link key={article.id} href={`/article/${article.slug}`}>
-                <ArticleCard article={article} isLarge />
+              <Link key={article.id} href={`/article/${article.slug}`} className="h-full">
+                <ArticleCard article={article} isLarge className="h-full" />
               </Link>
             ),
         )}
@@ -187,10 +187,10 @@ export default function ArticlesList({
             <ArticleCardSkeleton key={`skeleton-large-${index}`} isLarge={true} />
           ))}
       </div>
-      <div className="tablet-small:grid-cols-3 tablet-small:gap-5 grid grid-cols-2 gap-3">
+      <div className="tablet-small:grid-cols-3 tablet-small:gap-5 grid grid-cols-2 gap-3 items-stretch">
         {rest.map((article) => (
-          <Link key={article.id} href={`/article/${article.slug}`}>
-            <ArticleCard article={article} isLarge={false} />
+          <Link key={article.id} href={`/article/${article.slug}`} className="h-full">
+            <ArticleCard article={article} isLarge={false} className="h-full" />
           </Link>
         ))}
         {Array(skeletonSmallCount)

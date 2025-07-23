@@ -15,10 +15,12 @@ export const ArticleCard = ({
   article,
   isLarge,
   isSearch = false,
+  className,
 }: {
   article: Article
   isLarge: boolean
   isSearch?: boolean
+  className?: string
 }) => {
   const isClient = useIsClient()
 
@@ -45,7 +47,8 @@ export const ArticleCard = ({
         isLargeFinal ? 'rounded-2xl' : 'rounded-xl',
         'flex flex-col overflow-hidden bg-white/5',
         'border border-transparent border-[0.2px] transition-colors duration-500',
-        'relative group'
+        'relative group',
+        className // добавляем сюда
       )}
     >
       <div

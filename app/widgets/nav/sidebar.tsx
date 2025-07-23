@@ -11,35 +11,8 @@ type SidebarProps = {
 }
 
 export function Sidebar({ tags, categories }: SidebarProps) {
-  const tagOrder = [
-    'Steam',
-    'Counter-Strike 2',
-    'Epic Games',
-    'PlayStation',
-    'Dota 2',
-    'Supercell',
-    'Brawl Stars',
-    'Fortnite',
-    'Genshin Impact',
-    'PUBG Mobile',
-    'Valorant',
-    'Apex Legends',
-    'Black Russia',
-    'Battlefield 2042',
-    'Rust',
-    'Minecraft',
-    'Roblox',
-    'Squad Busters',
-    'Clash Royale',
-    'Mobile Legends'
-  ]
-
-  const filteredTags = tags
-    .filter(tag => tagOrder.includes(tag.title))
-    .sort((a, b) => tagOrder.indexOf(a.title) - tagOrder.indexOf(b.title));
-
   return (
-    <aside className="tablet-small:flex sticky top-0 col-span-1 hidden h-screen h-full flex-col justify-between py-2">
+    <aside className="tablet-small:flex sticky top-0 col-span-1 hidden flex-col justify-between py-2 max-h-screen overflow-y-auto z-20">
       <Link
         href="/"  
         className="flex h-[84px] flex-row items-center pl-0 pr-4"
@@ -55,7 +28,7 @@ export function Sidebar({ tags, categories }: SidebarProps) {
         <div className="text-xl font-bold text-white flex items-center h-full">CryptoZor.Ru</div>
       </Link>
 
-      <nav className="mb-auto flex flex-col gap-2 overflow-hidden">
+      <nav className="mb-auto flex flex-col gap-2 overflow-y-auto">
         <div className="flex flex-col gap-1">
           {categories.length === 0 ? (
             <div className="text-white/60 px-4 py-2">Здесь ничего нет</div>
@@ -86,12 +59,12 @@ export function Sidebar({ tags, categories }: SidebarProps) {
             Актуальные темы
           </h3>
           <div className="flex-1 overflow-y-auto">
-            {filteredTags.length === 0 ? (
+            {tags.length === 0 ? (
               <div className="text-white/60 px-4 py-2">Здесь ничего нет</div>
             ) : (
-              filteredTags.slice(0, 20).map((tag: any) => (
+              tags.slice(0, 20).map((tag: any) => (
                 <Category key={tag.id} href={`/tag/${tag.slug}`}>
-                  <div className="flex items-center gap-2 transition-all duration-150 rounded-lg px-2 py-1 hover:border hover:border-gray-400">
+                  <div className="flex items-center gap-2 transition-all duration-150 rounded-lg px-2 py-1">
                     {tag.icon?.url && (
                       <Image
                         src={process.env.NEXT_PUBLIC_BASE_URL + tag.icon.url}
