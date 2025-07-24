@@ -71,6 +71,7 @@ export default async function ArticleWrapper({
   if (!slug) return null
 
   const article = await getArticle(slug)
+  console.log(article )
   if (!article) return null
   const reactions = await getReactions(article.documentId)
   const views = await getArticleViews(article.documentId)

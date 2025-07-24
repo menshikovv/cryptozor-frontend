@@ -62,7 +62,7 @@ export default function CurrentPageLabel({ tags = [], categories = [], articleTi
                 : ''}
             </span>
           )}
-          <span className="text-white relative inline-block after:content-[''] after:block after:mt-2 after:h-0.5 after:rounded after:bg-gradient-to-r after:from-[#D9D9D9] after:to-[#75BE40] after:w-full">
+          <span className={`text-white relative inline-block after:content-[''] after:block after:mt-2 after:h-0.5 after:rounded after:bg-gradient-to-r after:from-[#D9D9D9] after:to-[#75BE40] after:w-full${isMobile ? ' ml-[-35px]' : ''}`}>
             {pageName.replace(/^Выбранная категория: |^Выбранная тема: /, '')}
           </span>
         </span>
@@ -70,7 +70,7 @@ export default function CurrentPageLabel({ tags = [], categories = [], articleTi
         pageName && (
           <span
             ref={textRef}
-            className="font-medium text-sm text-center tablet-small:text-left relative after:content-[''] after:block after:mt-2 after:h-0.5 after:rounded after:bg-gradient-to-r after:from-[#D9D9D9] after:to-[#75BE40] after:w-full"
+            className={`font-medium text-sm text-center tablet-small:text-left relative after:content-[''] after:block after:mt-2 after:h-0.5 after:rounded after:bg-gradient-to-r after:from-[#D9D9D9] after:to-[#75BE40] after:w-full${isMobile ? ' ml-[-35px]' : ''}`}
           >
             <span className="text-gray-400">
               {pageName.startsWith('Выбранная категория')

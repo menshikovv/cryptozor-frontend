@@ -108,7 +108,6 @@ export function Socials({ socials }: SocialsProps) {
           buttonGradient="bg-gradient-to-r from-black via-[#444444] to-[#75BE40]"
         />
       </div>
-      {/* Yandex.RTB R-A-16335060-1 */}
       <div id="yandex_rtb_R-A-16335060-1"></div>
     </div>
   )

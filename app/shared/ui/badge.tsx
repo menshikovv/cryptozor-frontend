@@ -24,7 +24,14 @@ export const Badge: FC<BadgeProps> = ({ children, icon, size = 'xs' }) => {
           className={'bg-primary size-[14px] rounded-[2px]'}
         />
       )}
-      <span>{children}</span>
+      <span style={{
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        maxWidth: 100,
+        display: 'inline-block',
+        verticalAlign: 'bottom',
+      }}>{children}</span>
     </div>
   )
 }

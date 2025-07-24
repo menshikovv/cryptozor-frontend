@@ -234,7 +234,9 @@ export const SearchModal: FC<SearchProps> = ({ className, tags, ...props }) => {
                                 width={25}
                                 className={'rounded'}
                               />
-                              {item.title}
+                              <span className="max-w-[110px] truncate whitespace-nowrap overflow-hidden text-ellipsis block">
+                                {item.title}
+                              </span>
                             </div>
                           </Link>
                         ))}
@@ -269,7 +271,9 @@ export const SearchModal: FC<SearchProps> = ({ className, tags, ...props }) => {
                               width={25}
                               className={'rounded'}
                             />
-                            {item.title}
+                            <span className="max-w-[230px] truncate whitespace-nowrap overflow-hidden text-ellipsis block">
+                              {item.title}
+                            </span>
                           </button>
                         ))}
                       </div>

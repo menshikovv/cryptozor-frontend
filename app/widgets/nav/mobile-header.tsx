@@ -20,7 +20,7 @@ export default function MobileHeader({
   const pathname = usePathname();
   const isArticlePage = pathname.startsWith('/article/');
   return (
-    <header className="bg-bg/80 tablet-small:px-7 tablet-small:flex-row tablet-small:hidden sticky top-0 z-50 flex w-full flex-col items-center justify-between px-0 pt-5 pb-6 backdrop-blur">
+    <header className="z-20 bg-bg/80 tablet-small:px-7 tablet-small:flex-row tablet-small:hidden flex w-full flex-col items-center justify-between px-0 pt-5 pb-6 backdrop-blur">
       <div
         className={
           'tablet-small:hidden flex w-full flex-row items-center justify-between'

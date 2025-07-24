@@ -49,7 +49,7 @@ export function Drawer({ tags, categories, socials }: DrawerProps) {
             exit={{ x: '100%' }}
             transition={{ duration: 0.2 }}
             className={cn(
-              'shadow-bg fixed top-0 right-0 z-[100] flex flex-col h-full w-72 bg-[linear-gradient(180deg,_#000000_0%,_#0D1D01_50%,_#0C1C00_100%)] p-4 px-[21px] shadow-2xl',
+              'shadow-bg fixed top-0 right-0 z-[100] flex flex-col h-full w-72 bg-[linear-gradient(180deg,_#000000_0%,_#0D1D01_50%,_#0C1C00_100%)] p-4 px-[21px] shadow-2xl z-[10000000000000000]',
             )}
           >
             <div className="flex flex-col flex-grow min-h-0 overflow-y-auto gap-4">
