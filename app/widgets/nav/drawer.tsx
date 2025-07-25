@@ -104,7 +104,7 @@ export function Drawer({ tags, categories, socials }: DrawerProps) {
                     <Icons.Note className={'size-4 fill-white/60'} /> Актуальные
                     темы
                   </h3>
-                  <div style={{ maxHeight: 220, overflowY: 'auto' }}>
+                  <div style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
                     {tags.length === 0 ? (
                       <div className="text-white/60 px-3 py-2">Здесь ничего нет</div>
                     ) : (

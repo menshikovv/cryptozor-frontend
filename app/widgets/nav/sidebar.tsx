@@ -15,13 +15,13 @@ export function Sidebar({ tags, categories }: SidebarProps) {
     <aside className="tablet-small:flex sticky top-0 col-span-1 hidden flex-col justify-between py-2 max-h-screen overflow-y-auto z-20">
       <Link
         href="/"  
-        className="flex h-[84px] flex-row items-center pl-0 pr-4"
+        className="flex h-[84px] flex-row items-center"
       >
         <Image
           loading={'eager'}
-          width={96}
+          width={84}
           height={84}
-          className={'max-h-[84px] min-h-[84px] max-w-[144px]'}
+          className={'max-h-[84px] min-h-[84px] max-w-[84px]'}
           src="/logo.svg"
           alt="Logo"
         />
