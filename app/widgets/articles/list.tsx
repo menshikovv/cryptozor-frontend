@@ -1,7 +1,7 @@
 'use client'
 
 import { API_URL } from '@/app/shared/config'
-import { ArticleCard, ArticleCardSkeleton } from '@/app/widgets/articles/card'
+import { ArticleCard } from '@/app/widgets/articles/card'
 import { useEffect, useMemo, useState, useRef } from 'react'
 import { useHeader } from '@/app/shared/store/header-store'
 import Link from 'next/link'
@@ -142,9 +142,6 @@ export default function ArticlesList({
   }, [sortedArticles, excludeArticleId]);
 
   if (isDefaultLayout) {
-    // Показываем скелетоны при загрузке или если есть еще данные для загрузки
-    const skeletonCount = loading ? pageSize : (loadingMore ? pageSize : 0)
-    
     return (
       <div
         className={
@@ -156,11 +153,6 @@ export default function ArticlesList({
             <ArticleCard article={article} isLarge={false} className="h-full" />
           </Link>
         ))}
-        {Array(skeletonCount)
-          .fill(0)
-          .map((_, index) => (
-            <ArticleCardSkeleton key={`skeleton-${index}`} isLarge={false} />
-          ))}
         {hasMore && (
           <div ref={observerTarget} className="h-10 w-full flex items-center justify-center">
           </div>
@@ -170,12 +162,6 @@ export default function ArticlesList({
   }
 
   const [first, second, ...rest] = filteredArticles
-  const largeCount = 2
-  const smallCount = 8
-  
-  // Показываем скелетоны при загрузке
-  const skeletonLargeCount = loading ? (first ? (second ? 0 : 1) : 2) : (loadingMore ? 2 : 0)
-  const skeletonSmallCount = loading ? Math.max(smallCount - rest.length, 0) : (loadingMore ? smallCount : 0)
 
   return (
     <div className="tablet-small:gap-5 flex w-full flex-col gap-3">
@@ -188,11 +174,6 @@ export default function ArticlesList({
               </Link>
             ),
         )}
-        {Array(skeletonLargeCount)
-          .fill(0)
-          .map((_, index) => (
-            <ArticleCardSkeleton key={`skeleton-large-${index}`} isLarge={true} />
-          ))}
       </div>
       <div className="tablet-small:grid-cols-3 tablet-small:gap-5 grid grid-cols-2 gap-3 items-stretch">
         {rest.map((article) => (
@@ -200,11 +181,6 @@ export default function ArticlesList({
             <ArticleCard article={article} isLarge={false} className="h-full" />
           </Link>
         ))}
-        {Array(skeletonSmallCount)
-          .fill(0)
-          .map((_, index) => (
-            <ArticleCardSkeleton key={`skeleton-small-${index}`} isLarge={false} />
-          ))}
         {hasMore && (
           <div ref={observerTarget} className="h-10 w-full col-span-full flex items-center justify-center">
           </div>
