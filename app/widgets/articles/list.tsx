@@ -37,15 +37,18 @@ export default function ArticlesList({
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        console.log('IntersectionObserver entries:', entries)
         if (entries[0].isIntersecting && !loading && hasMore) {
+          console.log('Loader is intersecting, loading next page...')
           setPage(prev => prev + 1)
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: '200px' } // увеличен rootMargin
     )
 
     if (observerTarget.current) {
       observer.observe(observerTarget.current)
+      console.log('Observer attached to:', observerTarget.current)
     }
 
     return () => observer.disconnect()

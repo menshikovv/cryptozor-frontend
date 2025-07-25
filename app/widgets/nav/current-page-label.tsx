@@ -28,7 +28,8 @@ export default function CurrentPageLabel({ tags = [], categories = [], articleTi
     if (pathname.startsWith('/article')) return 'Текущая новость'
     if (pathname.startsWith('/category/')) {
       const match = pathname.match(/^\/category\/([^\/]+)/)
-      if (match && categories && categories.length > 0) {
+      if (!categories || categories.length === 0) return '';
+      if (match) {
         const category = categories.find((c: any) => c.slug === match[1])
         if (category) return `Выбранная категория: ${category.title}`
       }
@@ -46,6 +47,7 @@ export default function CurrentPageLabel({ tags = [], categories = [], articleTi
 
   const textRef = useRef<HTMLSpanElement>(null)
 
+  const showMobile = !mounted || isMobile;
 
   return (
     <div
@@ -53,16 +55,26 @@ export default function CurrentPageLabel({ tags = [], categories = [], articleTi
       style={mounted && isMobile ? { marginLeft: '2px' } : undefined}
     >
       {pageName && (pageName.startsWith('Выбранная категория') || pageName.startsWith('Выбранная тема')) ? (
-        <span className="font-medium text-sm text-center tablet-small:text-left relative">
-          <span className={`text-white relative inline-block after:content-[''] after:block after:mt-2 after:h-0.5 after:rounded after:bg-gradient-to-r after:from-[#D9D9D9] after:to-[#75BE40] after:w-full${mounted && isMobile ? ' ml-[-35px]' : ''}`}>
-            {pageName.replace(/^Выбранная категория: |^Выбранная тема: /, '')}
-          </span>
+        <span className="font-medium text-sm text-center tablet-small:text-left relative text-white">
+          {!showMobile ? (
+            <>
+              {pageName.startsWith('Выбранная категория') && <span className="text-gray-400">Выбранная категория: </span>}
+              {pageName.startsWith('Выбранная тема') && <span className="text-gray-400">Выбранная тема: </span>}
+              <span className="relative inline-block after:content-[''] after:block after:mt-2 after:h-0.5 after:rounded after:bg-gradient-to-r after:from-[#D9D9D9] after:to-[#75BE40] after:w-full">
+                {pageName.replace(/^Выбранная категория: |^Выбранная тема: /, '')}
+              </span>
+            </>
+          ) : (
+            <span className="text-white relative inline-block after:content-[''] after:block after:mt-2 after:h-0.5 after:rounded after:bg-gradient-to-r after:from-[#D9D9D9] after:to-[#75BE40] after:w-full">
+              {pageName.replace(/^Выбранная категория: |^Выбранная тема: /, '')}
+            </span>
+          )}
         </span>
       ) : (
         pageName && (
           <span
             ref={textRef}
-            className={`font-medium text-sm text-center tablet-small:text-left relative after:content-[''] after:block after:mt-2 after:h-0.5 after:rounded after:bg-gradient-to-r after:from-[#D9D9D9] after:to-[#75BE40] after:w-full${mounted && isMobile ? ' ml-[-35px]' : ''}`}
+            className="font-medium text-sm text-center tablet-small:text-left relative after:content-[''] after:block after:mt-2 after:h-0.5 after:rounded after:bg-gradient-to-r after:from-[#D9D9D9] after:to-[#75BE40] after:w-full"
           >
             <span className="text-white">
               {pageName.replace(/^Выбранная категория: |^Выбранная тема: /, '')}

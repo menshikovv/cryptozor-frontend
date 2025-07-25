@@ -108,7 +108,7 @@ export default async function CategoryPage({
               <Image
                 src={BASE_URL + category?.wallpaper?.url}
                 alt={'preview'}
-                className="object-cover"
+                className="object-cover rounded-b-2xl"
                 fill
                 sizes={'(min-width: 768px) 50vw, 100vw'}
               />

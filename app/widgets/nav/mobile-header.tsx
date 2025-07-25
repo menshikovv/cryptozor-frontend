@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Filters } from '@/app/features/filters'
 import { OpenDrawer } from '@/app/features/drawer/open'
 import { usePathname } from 'next/navigation'
-import { useMemo } from 'react'
+import './mobile-header.css'
 import CurrentPageLabel from './current-page-label'
 
 type MobileHeaderProps = {
@@ -37,7 +37,7 @@ export default function MobileHeader({
             alt="Logo"
           />
         </Link>
-        <div className="flex-1 flex justify-center">
+        <div className="flex-1 flex justify-center vovan">
           <CurrentPageLabel tags={tags} categories={categories} />
         </div>
         <OpenDrawer />
