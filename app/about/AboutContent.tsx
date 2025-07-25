@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { DollarSign, BarChart3, TrendingUp, School, Newspaper } from 'lucide-react'
+import DisclaimerModal from './DisclaimerModal'
 
 export default function AboutContent() {
   return (
@@ -16,7 +17,7 @@ export default function AboutContent() {
           className="bg-gradient-to-br from-[#101c13] via-[#0F0F15] to-[#1a2e1a] rounded-3xl p-8 shadow-2xl border border-[#75BE40]/30 overflow-hidden relative"
         >
           <div className="absolute inset-0 pointer-events-none z-0" style={{background: 'radial-gradient(circle at 80% 20%, rgba(117,190,64,0.15) 0%, transparent 70%)'}} />
-          <div className="flex items-center mb-8 relative z-10">
+          <div className="flex flex-wrap items-center mb-8 relative z-10">
             <DollarSign className="h-8 w-8 text-yellow-400 drop-shadow-[0_0_8px_#FFD600cc] mr-4" />
             <motion.h1 
               initial={{ x: -20 }}
@@ -25,6 +26,12 @@ export default function AboutContent() {
             >
               CryptoZor.Ru
             </motion.h1>
+            <div
+              className="ml-auto mt-4 sm:mt-0 w-full sm:w-auto"
+              style={{ maxWidth: '100%', ...(typeof window !== 'undefined' && window.innerWidth <= 356 ? { display: 'flex', justifyContent: 'center' } : {}) }}
+            >
+              <DisclaimerModal />
+            </div>
           </div>
 
           <motion.div

@@ -131,13 +131,27 @@ export function Drawer({ tags, categories, socials }: DrawerProps) {
                       ))
                     )}
                   </div>
-                  <Link
-                    href="/tags"
-                    className="mt-1 flex h-10 cursor-pointer flex-row items-center gap-2 px-3 text-sm font-medium text-white/60 border-t border-white/5 pt-2"
-                    style={{ minHeight: 40 }}
-                  >
-                    <CornerDownRight className={'size-3.5'} /> Посмотреть всё
-                  </Link>
+                  <div className="sticky bottom-0 bg-[linear-gradient(rgb(0, 0, 0) 0%, rgb(13, 29, 1) 50%, rgb(12, 28, 0) 100%)] z-[10000000000000000]">
+                    <Link
+                      href="/tags"
+                      className="flex w-full h-10 cursor-pointer flex-row items-center gap-2 text-sm font-medium text-white/60 relative"
+                      style={{ minHeight: 40, backdropFilter: 'blur(15px)' }}
+                    >
+                      <span className="pl-3 flex items-center gap-2">
+                        <CornerDownRight className={'size-3.5'} /> Посмотреть всё
+                      </span>
+                      <span
+                        style={{
+                          position: 'absolute',
+                          left: '40px', // отступ слева для линии
+                          top: 0,
+                          right: 0,
+                          height: '1px',
+                          background: 'rgba(255,255,255,0.05)',
+                        }}
+                      />
+                    </Link>
+                  </div>
                 </div>
               </nav>
             </div>

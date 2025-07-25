@@ -20,7 +20,7 @@ const ALL_REACTIONS = [
   { title: 'medal-1', icon: '/emoji/medal-1.png' },
   { title: 'medal-2', icon: '/emoji/medal-2.png' },
   { title: 'medal-3', icon: '/emoji/medal-3.png' },
-  { title: 'cryptozor', icon: '/emoji/cryptozor.png' },
+  { title: 'mentup', icon: '/emoji/cryptozor.png' },
   { title: 'percent', icon: '/emoji/percent.png' },
   { title: 'rocket', icon: '/emoji/rocket.png' },
   { title: 'shield', icon: '/emoji/shield.png' },

@@ -122,8 +122,14 @@ body {
   color: var(--color-white) !important;
   overflow-x: hidden;
   overscroll-behavior-x: none;
-  overscroll-behavior-y: none;
+  overscroll-behavior-y: auto;
   scroll-behavior: smooth;
+}
+
+@media (min-width: 768px) {
+  body {
+    overscroll-behavior-y: contain;
+  }
 }
 
 html, body {
