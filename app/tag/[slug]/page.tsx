@@ -111,7 +111,7 @@ export default async function TagPage({
         />
       </Head>
       <div className="relative flex flex-col gap-5 pb-6">
-        <div className={`flex flex-col overflow-hidden rounded-2xl bg-white/5`}>
+        <div className={`flex flex-col overflow-hidden rounded-2xl bg-white/5`} style={{ borderRadius: '30px' }}>
           <div
             className={
               'tablet-small:min-h-[221px] relative flex min-h-[107px] items-center justify-center'
@@ -124,6 +124,7 @@ export default async function TagPage({
                 className="object-cover"
                 fill
                 sizes={'(min-width: 768px) 50vw, 100vw'}
+                style={{ borderRadius: '30px' }}
               />
             )}
           </div>

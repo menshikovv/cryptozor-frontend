@@ -91,12 +91,7 @@ export function Sidebar({ tags, categories }: SidebarProps) {
       </nav>
         <div className={'flex flex-col gap-1'}>
           <div className={'h-px w-full bg-white/5'} />
-          <Link
-            href={'/about'}
-            className={
-              'flex h-10 flex-row items-center text-sm font-medium justify-start'
-            }
-          >
+          <Category href="/about">
             <Image
               loading={'eager'}
               className={'max-h-[32px] min-h-[32px] max-w-[32px] min-w-[32px]'}
@@ -106,7 +101,7 @@ export function Sidebar({ tags, categories }: SidebarProps) {
               alt="Logo"
             />
             <span className="ml-2">О проекте CryptoZor LTD</span>
-          </Link>
+          </Category>
         </div>
     </aside>
   )
