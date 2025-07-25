@@ -22,6 +22,7 @@ export default function ArticlesList({
   const { sort } = useHeader()
   const [articles, setArticles] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [loadingMore, setLoadingMore] = useState(false)
   const [hasMore, setHasMore] = useState(true)
   const [page, setPage] = useState(1)
   const observerTarget = useRef<HTMLDivElement>(null)
@@ -32,31 +33,33 @@ export default function ArticlesList({
     setArticles([])
     setPage(1)
     setHasMore(true)
+    setLoadingMore(false)
   }, [sort, isCategoryPage, isTagPage, excludeArticleId])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        console.log('IntersectionObserver entries:', entries)
-        if (entries[0].isIntersecting && !loading && hasMore) {
-          console.log('Loader is intersecting, loading next page...')
+        if (entries[0].isIntersecting && !loading && !loadingMore && hasMore) {
           setPage(prev => prev + 1)
         }
       },
-      { threshold: 0.1, rootMargin: '200px' } // увеличен rootMargin
+      { threshold: 0.1, rootMargin: '100px' }
     )
 
     if (observerTarget.current) {
       observer.observe(observerTarget.current)
-      console.log('Observer attached to:', observerTarget.current)
     }
 
     return () => observer.disconnect()
-  }, [loading, hasMore])
+  }, [loading, loadingMore, hasMore])
 
   useEffect(() => {
     const fetchArticles = async () => {
-      setLoading(true)
+      if (page === 1) {
+        setLoading(true)
+      } else {
+        setLoadingMore(true)
+      }
 
       const params = new URLSearchParams()
 
@@ -98,7 +101,11 @@ export default function ArticlesList({
       } catch (error) {
         console.error('Failed to fetch articles:', error)
       } finally {
-        setLoading(false)
+        if (page === 1) {
+          setLoading(false)
+        } else {
+          setLoadingMore(false)
+        }
       }
     }
 
@@ -135,7 +142,9 @@ export default function ArticlesList({
   }, [sortedArticles, excludeArticleId]);
 
   if (isDefaultLayout) {
-    const skeletonCount = loading ? Math.max(pageSize - filteredArticles.length, 0) : 0
+    // Показываем скелетоны при загрузке или если есть еще данные для загрузки
+    const skeletonCount = loading ? pageSize : (loadingMore ? pageSize : 0)
+    
     return (
       <div
         className={
@@ -154,11 +163,6 @@ export default function ArticlesList({
           ))}
         {hasMore && (
           <div ref={observerTarget} className="h-10 w-full flex items-center justify-center">
-            {loading && (
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-8 h-8 border-2 border-transparent border-t-green-500 rounded-full animate-spin"></div>
-              </div>
-            )}
           </div>
         )}
       </div>
@@ -168,10 +172,10 @@ export default function ArticlesList({
   const [first, second, ...rest] = filteredArticles
   const largeCount = 2
   const smallCount = 8
-  const loadedLarge = [first, second].filter(Boolean).length
-  const loadedSmall = rest.length
-  const skeletonLargeCount = loading ? Math.max(largeCount - loadedLarge, 0) : 0
-  const skeletonSmallCount = loading ? Math.max(smallCount - loadedSmall, 0) : 0
+  
+  // Показываем скелетоны при загрузке
+  const skeletonLargeCount = loading ? (first ? (second ? 0 : 1) : 2) : (loadingMore ? 2 : 0)
+  const skeletonSmallCount = loading ? Math.max(smallCount - rest.length, 0) : (loadingMore ? smallCount : 0)
 
   return (
     <div className="tablet-small:gap-5 flex w-full flex-col gap-3">
@@ -203,11 +207,6 @@ export default function ArticlesList({
           ))}
         {hasMore && (
           <div ref={observerTarget} className="h-10 w-full col-span-full flex items-center justify-center">
-            {loading && (
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-8 h-8 border-2 border-transparent border-t-green-500 rounded-full animate-spin"></div>
-              </div>
-            )}
           </div>
         )}
       </div>

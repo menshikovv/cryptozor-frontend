@@ -143,11 +143,8 @@ export const ArticleCard = ({
 }
 
 export const ArticleCardSkeleton = ({ isLarge }: { isLarge: boolean }) => {
-  const isClient = useIsClient()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const isLargeFinal = !isMobile ? isLarge : false
-
-  if (!isClient) return null
 
   const imageHeightClass = 'aspect-[16/9]'
 

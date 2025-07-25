@@ -46,7 +46,7 @@ export default function TagsPageClient() {
     : sortedTags
 
   return (
-    <>
+    <div className="flex flex-col min-h-full pb-8">
       <div className="max-[960px]:block hidden">
         <TagSearchInput value={search} onChange={setSearch} />
       </div>
@@ -89,6 +89,6 @@ export default function TagsPageClient() {
           })
         )}
       </div>
-    </>
+    </div>
   )
 } 

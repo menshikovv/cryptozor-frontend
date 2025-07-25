@@ -149,12 +149,12 @@ export default async function RootLayout({
         <Suspense fallback={<GlobalLoadingIndicator />}>
           <Drawer tags={tags} categories={categories} socials={socials} />
           <SearchModal tags={tags} />
-          <div className="tablet-small:px-5 tablet:grid-cols-[300px_1fr_300px] tablet-small:grid-cols-[300px_1fr] relative mx-auto grid min-h-[100dvh] max-w-[1440px] grid-cols-[1fr] px-4">
+          <div className="tablet-small:px-5 tablet:grid-cols-[300px_1fr_300px] tablet-small:grid-cols-[300px_1fr] relative mx-auto grid min-h-screen max-w-[1440px] grid-cols-[1fr] px-4">
             <Sidebar tags={tags} categories={categories} />
             <div className="flex flex-col">
               <Header tags={tags} categories={categories} />
               <MobileHeader tags={tags} categories={categories} />
-              <main className="tablet-small:px-7 flex-1">
+              <main className="tablet-small:px-7 flex-1 tablet-small:pt-0 pt-4">
                 <LayoutDataProvider value={{ categories, tags }}>
                   {children}
                 </LayoutDataProvider>

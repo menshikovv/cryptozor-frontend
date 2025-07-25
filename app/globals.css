@@ -133,6 +133,8 @@ html, body {
   body {
     max-width: 100%;
     overflow-x: hidden;
+    min-height: 100vh;
+    min-height: 100dvh;
   }
   html {
     margin-left: 0;
@@ -329,4 +331,27 @@ html, body {
 }
 html, body {
   scrollbar-width: none; /* Firefox */
+}
+
+/* Дополнительные стили для мобильной прокрутки */
+@media screen and (max-width: 768px) {
+  body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  main {
+    min-height: calc(100vh - 200px);
+    padding-bottom: 2rem;
+  }
+  
+  /* Убеждаемся, что контент может прокручиваться до конца */
+  .flex-1 {
+    min-height: 0;
+  }
+  
+  /* Дополнительный отступ для страницы тегов */
+  .grid {
+    min-height: auto;
+  }
 }

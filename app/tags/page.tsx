@@ -50,5 +50,9 @@ export async function generateMetadata () {
 }
 
 export default function TagsPage() {
-  return <TagsPageClient />
+  return (
+    <div className="min-h-full w-full">
+      <TagsPageClient />
+    </div>
+  )
 }
