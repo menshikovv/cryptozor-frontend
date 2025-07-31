@@ -23,30 +23,43 @@ function Pagination({
   totalPages: number
   onPageChange: (page: number) => void 
 }) {
+  const [isExpanded, setIsExpanded] = useState(false)
+
   const getVisiblePages = () => {
-    const delta = 2
-    const range = []
-    const rangeWithDots = []
-
-    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
-      range.push(i)
+    // Если развернуто, показываем все страницы
+    if (isExpanded) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1)
     }
 
-    if (currentPage - delta > 2) {
-      rangeWithDots.push(1, '...')
-    } else {
-      rangeWithDots.push(1)
-    }
+    // Показываем текущую страницу с соседними и последнюю страницу
+    const pages = []
+    
+    if (currentPage === 1) {
+      // Для первой страницы: 1 2 3 ... 139
+      pages.push(1, 2, 3)
+      if (totalPages > 3) {
+        pages.push('...', totalPages)
+      }
+         } else {
+       // Для остальных страниц: текущая страница с соседними
+       const start = Math.max(1, currentPage - 1)
+       const end = Math.min(totalPages, currentPage + 1)
+       
+       for (let i = start; i <= end; i++) {
+         pages.push(i)
+       }
+       
+       // Добавляем последнюю страницу, если она не входит в диапазон
+       if (totalPages > end) {
+         pages.push('...', totalPages)
+       }
+     }
 
-    rangeWithDots.push(...range)
+    return pages
+  }
 
-    if (currentPage + delta < totalPages - 1) {
-      rangeWithDots.push('...', totalPages)
-    } else {
-      rangeWithDots.push(totalPages)
-    }
-
-    return rangeWithDots
+  const handleDotsClick = () => {
+    setIsExpanded(true)
   }
 
   const visiblePages = getVisiblePages()
@@ -57,42 +70,63 @@ function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex items-center justify-center w-12 h-12 rounded-[11px] border border-white/10 bg-white/5 text-white hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-button"
+        className="flex items-center justify-center w-8 h-8 text-white hover:text-white/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 text-lg font-medium"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
+        &lt;
       </button>
 
       {/* Номера страниц */}
-      {visiblePages.map((page, index) => (
-        <div key={index}>
-          {page === '...' ? (
-            <span className="flex items-center justify-center w-12 h-12 text-white/60 font-medium">...</span>
-          ) : (
+      {isExpanded ? (
+        // Если развернуто, показываем все страницы в строчку с переносом
+        <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
+          {visiblePages.map((page, index) => (
             <button
+              key={index}
               onClick={() => onPageChange(page as number)}
-              className={`flex items-center justify-center w-12 h-12 rounded-[11px] border font-semibold text-base transition-all duration-200 ${
+              className={`flex items-center justify-center w-8 h-8 rounded-full font-medium text-base transition-all duration-200 ${
                 currentPage === page
-                  ? 'bg-primary border-primary text-white shadow-button'
-                  : 'border-white/10 bg-white/5 text-white hover:bg-white/10 shadow-button'
+                  ? 'bg-green-600 text-white'
+                  : 'text-white hover:text-white/80'
               }`}
             >
               {page}
             </button>
-          )}
+          ))}
         </div>
-      ))}
+      ) : (
+        // Обычный режим с "..." кнопкой
+        visiblePages.map((page, index) => (
+          <div key={index}>
+            {page === '...' ? (
+              <button
+                onClick={handleDotsClick}
+                className="flex items-center justify-center w-8 h-8 text-white font-medium hover:text-white/80 cursor-pointer transition-all duration-200"
+              >
+                ...
+              </button>
+            ) : (
+              <button
+                onClick={() => onPageChange(page as number)}
+                className={`flex items-center justify-center w-8 h-8 rounded-full font-medium text-base transition-all duration-200 ${
+                  currentPage === page
+                    ? 'bg-purple-600 text-white'
+                    : 'text-white hover:text-white/80'
+                }`}
+              >
+                {page}
+              </button>
+            )}
+          </div>
+        ))
+      )}
 
       {/* Кнопка "Следующая" */}
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex items-center justify-center w-12 h-12 rounded-[11px] border border-white/10 bg-white/5 text-white hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-button"
+        className="flex items-center justify-center w-8 h-8 text-white hover:text-white/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 text-lg font-medium"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
+        &gt;
       </button>
     </div>
   )
@@ -107,6 +141,7 @@ export default function ArticlesList({
   const { sort } = useHeader()
   const [articles, setArticles] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [showPagination, setShowPagination] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [totalArticles, setTotalArticles] = useState(0)
@@ -116,6 +151,7 @@ export default function ArticlesList({
   useEffect(() => {
     setArticles([])
     setCurrentPage(1)
+    setShowPagination(false)
   }, [sort, isCategoryPage, isTagPage, excludeArticleId])
 
   useEffect(() => {
@@ -165,6 +201,10 @@ export default function ArticlesList({
         console.error('Failed to fetch articles:', error)
       } finally {
         setLoading(false)
+        // Показываем пагинацию с небольшой задержкой после загрузки
+        setTimeout(() => {
+          setShowPagination(true)
+        }, 300)
       }
     }
 
@@ -206,8 +246,8 @@ export default function ArticlesList({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="w-12 h-12 rounded-full border-4 border-transparent border-t-purple-500 border-r-purple-500 animate-spin"></div>
       </div>
     )
   }
@@ -223,7 +263,7 @@ export default function ArticlesList({
           ))}
         </div>
         
-        {totalPages > 1 && (
+        {totalPages > 1 && showPagination && (
           <Pagination 
             currentPage={currentPage} 
             totalPages={totalPages} 
@@ -258,7 +298,7 @@ export default function ArticlesList({
         </div>
       </div>
       
-      {totalPages > 1 && (
+      {totalPages > 1 && showPagination && (
         <Pagination 
           currentPage={currentPage} 
           totalPages={totalPages} 
