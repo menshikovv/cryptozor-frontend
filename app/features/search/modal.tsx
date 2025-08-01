@@ -97,7 +97,6 @@ export const SearchModal: FC<SearchProps> = ({ className, tags, ...props }) => {
 
         setArticles(newArticles)
       } catch (error) {
-        console.error('Failed to fetch articles:', error)
       } finally {
         setLoading(false)
       }

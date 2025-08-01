@@ -23,18 +23,6 @@ dayjs.locale('ru')
 const inter = Inter({ subsets: ['latin'] })
 
 async function getGlobal() {
-  // Всегда возвращаем статические данные во время сборки
-  if (process.env.NODE_ENV === 'production') {
-    return {
-      seo: {
-        title_tag: 'CryptoZor.Ru',
-        meta_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
-        og_title: 'CryptoZor.Ru',
-        og_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
-        og_type: 'website'
-      }
-    }
-  }
 
   try {
     if (!API_URL) {
@@ -54,7 +42,6 @@ async function getGlobal() {
       next: { revalidate: 1 },
     })
     if (!res.ok) {
-      console.warn(`Failed to fetch global data: ${res.status}`)
       return {
         seo: {
           title_tag: 'CryptoZor.Ru',
@@ -136,11 +123,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 async function getCategories() {
-  // Всегда возвращаем пустой массив во время сборки
-  if (process.env.NODE_ENV === 'production') {
-    return []
-  }
-
   try {
     if (!API_URL) {
       console.warn('API_URL is not defined for categories')
@@ -152,7 +134,6 @@ async function getCategories() {
       { next: { revalidate: 100 } },
     )
     if (!res.ok) {
-      console.warn(`Failed to fetch categories: ${res.status}`)
       return []
     }
     const json = await res.json()
@@ -164,11 +145,6 @@ async function getCategories() {
 }
 
 async function getTags() {
-  // Всегда возвращаем пустой массив во время сборки
-  if (process.env.NODE_ENV === 'production') {
-    return []
-  }
-
   try {
     if (!API_URL) {
       console.warn('API_URL is not defined for tags')
@@ -179,22 +155,16 @@ async function getTags() {
       next: { revalidate: 100 },
     })
     if (!res.ok) {
-      console.warn(`Failed to fetch tags: ${res.status}`)
       return []
     }
     const json = await res.json()
     return Array.isArray(json?.data) ? json.data : []
   } catch (error) {
-    console.error('Error fetching tags:', error)
     return []
   }
 }
 
 async function getSocials() {
-  // Всегда возвращаем пустой объект во время сборки
-  if (process.env.NODE_ENV === 'production') {
-    return {}
-  }
 
   try {
     if (!API_URL) {
@@ -206,7 +176,6 @@ async function getSocials() {
       next: { revalidate: 100 },
     })
     if (!res.ok) {
-      console.warn(`Failed to fetch socials: ${res.status}`)
       return {}
     }
     const json = await res.json()
@@ -220,20 +189,11 @@ async function getSocials() {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // Во время сборки используем пустые данные
-  const categories = process.env.NODE_ENV === 'production' ? [] : await getCategories()
-  const tags = process.env.NODE_ENV === 'production' ? [] : await getTags()
-  const socials = process.env.NODE_ENV === 'production' ? {} : await getSocials()
+  const categories = await getCategories()
+  const tags = await getTags()
+  const socials = await getSocials()
 
-  const settings = process.env.NODE_ENV === 'production' ? {
-    seo: {
-      title_tag: 'CryptoZor.Ru',
-      meta_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
-      og_title: 'CryptoZor.Ru',
-      og_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
-      og_type: 'website'
-    }
-  } : await getGlobal()
+  const settings = await getGlobal()
 
   let html_seo_description = ''
   if (process.env.NODE_ENV !== 'production') {

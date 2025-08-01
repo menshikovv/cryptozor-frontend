@@ -15,7 +15,6 @@ async function getTag(slug: string) {
       { next: { revalidate: 100 } },
     )
     if (!res.ok) {
-      console.error(`Failed to fetch tag with slug: ${slug}, status: ${res.status}`)
       return null
     }
     const json = await res.json()

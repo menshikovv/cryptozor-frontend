@@ -13,7 +13,6 @@ export default function NotFoundClient() {
       setShowNotification(true)
       setTimeout(() => setShowNotification(false), 2000)
     } catch (err) {
-      console.error('Failed to copy email:', err)
     }
   }
 

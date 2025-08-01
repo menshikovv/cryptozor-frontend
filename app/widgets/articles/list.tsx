@@ -198,7 +198,6 @@ export default function ArticlesList({
         
         setArticles(newArticles)
       } catch (error) {
-        console.error('Failed to fetch articles:', error)
       } finally {
         setLoading(false)
         // Показываем пагинацию с небольшой задержкой после загрузки

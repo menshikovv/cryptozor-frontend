@@ -16,7 +16,6 @@ async function fetchAllPaginated(url: string, token?: string) {
       },
     )
     if (!res.ok) {
-      console.error('Failed to fetch paginated data:', await res.text())
       break
     }
     const json = await res.json()

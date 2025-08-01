@@ -16,7 +16,6 @@ async function getCategory(slug: string) {
     )
 
     if (!res.ok) {
-      console.error(`Failed to fetch category with slug: ${slug}, status: ${res.status}`)
       return null
     }
     const json = await res.json()

@@ -7,7 +7,6 @@ export async function getArticle(slug: string) {
       { next: { revalidate: 100 } },
     )
     if (!res.ok) {
-      console.error(`Failed to fetch article with slug: ${slug}, status: ${res.status}`)
       return null
     }
     const json = await res.json()
@@ -25,7 +24,6 @@ export async function getArticleViews(documentId: string) {
       { next: { revalidate: 1 } },
     )
     if (!res.ok) {
-      console.error(`Failed to fetch article views for documentId: ${documentId}, status: ${res.status}`)
       return { organic_views: 0, boosted_views: 0 }
     }
     const json = await res.json()
@@ -43,7 +41,6 @@ export async function getReactions(documentId: string) {
       { next: { revalidate: 1 } },
     )
     if (!res.ok) {
-      console.error(`Failed to fetch reactions for documentId: ${documentId}, status: ${res.status}`)
       return []
     }
     const json = await res.json()
@@ -68,7 +65,6 @@ export async function getRelatedArticles(articleTags: any[], excludeArticleId: s
       { next: { revalidate: 100 } },
     )
     if (!res.ok) {
-      console.error(`Failed to fetch related articles for articleId: ${excludeArticleId}, status: ${res.status}`)
       return []
     }
     const json = await res.json()
