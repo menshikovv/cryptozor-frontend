@@ -23,10 +23,31 @@ dayjs.locale('ru')
 const inter = Inter({ subsets: ['latin'] })
 
 async function getGlobal() {
+  // Всегда возвращаем статические данные во время сборки
+  if (process.env.NODE_ENV === 'production') {
+    return {
+      seo: {
+        title_tag: 'CryptoZor.Ru',
+        meta_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+        og_title: 'CryptoZor.Ru',
+        og_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+        og_type: 'website'
+      }
+    }
+  }
+
   try {
     if (!API_URL) {
       console.warn('API_URL is not defined')
-      return {}
+      return {
+        seo: {
+          title_tag: 'CryptoZor.Ru',
+          meta_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+          og_title: 'CryptoZor.Ru',
+          og_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+          og_type: 'website'
+        }
+      }
     }
     
     const res = await fetch(`${API_URL}/global?populate=favicon&populate=seo&populate=seo.og_image`, {
@@ -34,13 +55,37 @@ async function getGlobal() {
     })
     if (!res.ok) {
       console.warn(`Failed to fetch global data: ${res.status}`)
-      return {}
+      return {
+        seo: {
+          title_tag: 'CryptoZor.Ru',
+          meta_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+          og_title: 'CryptoZor.Ru',
+          og_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+          og_type: 'website'
+        }
+      }
     }
     const json = await res.json()
-    return json?.data || {}
+    return json?.data || {
+      seo: {
+        title_tag: 'CryptoZor.Ru',
+        meta_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+        og_title: 'CryptoZor.Ru',
+        og_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+        og_type: 'website'
+      }
+    }
   } catch (error) {
     console.error('Error fetching global data:', error)
-    return {}
+    return {
+      seo: {
+        title_tag: 'CryptoZor.Ru',
+        meta_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+        og_title: 'CryptoZor.Ru',
+        og_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+        og_type: 'website'
+      }
+    }
   }
 }
 
@@ -53,6 +98,19 @@ function GlobalLoadingIndicator() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+  // Во время сборки возвращаем статические метаданные
+  if (process.env.NODE_ENV === 'production') {
+    return {
+      title: 'CryptoZor.Ru',
+      description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+      openGraph: {
+        title: 'CryptoZor.Ru',
+        type: 'website',
+        description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+      },
+    }
+  }
+
   const { seo } = await getGlobal()
 
   return {
@@ -78,41 +136,83 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 async function getCategories() {
+  // Всегда возвращаем пустой массив во время сборки
+  if (process.env.NODE_ENV === 'production') {
+    return []
+  }
+
   try {
+    if (!API_URL) {
+      console.warn('API_URL is not defined for categories')
+      return []
+    }
+    
     const res = await fetch(
       `${API_URL}/categories?populate[icon][populate]&populate[wallpaper][populate]`,
       { next: { revalidate: 100 } },
     )
-    if (!res.ok) return []
+    if (!res.ok) {
+      console.warn(`Failed to fetch categories: ${res.status}`)
+      return []
+    }
     const json = await res.json()
     return Array.isArray(json?.data) ? json.data : []
-  } catch {
+  } catch (error) {
+    console.error('Error fetching categories:', error)
     return []
   }
 }
 
 async function getTags() {
+  // Всегда возвращаем пустой массив во время сборки
+  if (process.env.NODE_ENV === 'production') {
+    return []
+  }
+
   try {
+    if (!API_URL) {
+      console.warn('API_URL is not defined for tags')
+      return []
+    }
+    
     const res = await fetch(`${API_URL}/tags?populate=icon&populate=articles&pagination[pageSize]=100`, {
       next: { revalidate: 100 },
     })
-    if (!res.ok) return []
+    if (!res.ok) {
+      console.warn(`Failed to fetch tags: ${res.status}`)
+      return []
+    }
     const json = await res.json()
     return Array.isArray(json?.data) ? json.data : []
-  } catch {
+  } catch (error) {
+    console.error('Error fetching tags:', error)
     return []
   }
 }
 
 async function getSocials() {
+  // Всегда возвращаем пустой объект во время сборки
+  if (process.env.NODE_ENV === 'production') {
+    return {}
+  }
+
   try {
+    if (!API_URL) {
+      console.warn('API_URL is not defined for socials')
+      return {}
+    }
+    
     const res = await fetch(`${API_URL}/social`, {
       next: { revalidate: 100 },
     })
-    if (!res.ok) return {}
+    if (!res.ok) {
+      console.warn(`Failed to fetch socials: ${res.status}`)
+      return {}
+    }
     const json = await res.json()
     return json?.data || {}
-  } catch {
+  } catch (error) {
+    console.error('Error fetching socials:', error)
     return {}
   }
 }
@@ -120,17 +220,34 @@ async function getSocials() {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const categories = await getCategories()
-  const tags = await getTags()
-  const socials = await getSocials()
+  // Во время сборки используем пустые данные
+  const categories = process.env.NODE_ENV === 'production' ? [] : await getCategories()
+  const tags = process.env.NODE_ENV === 'production' ? [] : await getTags()
+  const socials = process.env.NODE_ENV === 'production' ? {} : await getSocials()
 
-  const settings = await getGlobal()
+  const settings = process.env.NODE_ENV === 'production' ? {
+    seo: {
+      title_tag: 'CryptoZor.Ru',
+      meta_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+      og_title: 'CryptoZor.Ru',
+      og_description: 'Новости и статьи о технологиях, бизнесе и инновациях',
+      og_type: 'website'
+    }
+  } : await getGlobal()
 
-  const html_seo_description = parseBlocks(
-    Array.isArray(settings?.seo?.['html_seo_description'])
-      ? settings.seo['html_seo_description']
-      : []
-  )
+  let html_seo_description = ''
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      html_seo_description = parseBlocks(
+        Array.isArray(settings?.seo?.['html_seo_description'])
+          ? settings.seo['html_seo_description']
+          : []
+      ) || ''
+    } catch (error) {
+      console.error('Error parsing html_seo_description:', error)
+      html_seo_description = ''
+    }
+  }
   
   return (
     <html lang="ru">

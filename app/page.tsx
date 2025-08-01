@@ -1,8 +1,8 @@
 import ArticlesList from '@/app/widgets/articles/list'
 import type { Metadata } from 'next'
 
-export const dynamic = 'force-static'
-export const revalidate = 1200
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export const metadata: Metadata = {
   title: 'CryptoZor.Ru',

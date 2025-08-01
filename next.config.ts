@@ -2,6 +2,8 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
+  // Отключаем статическую генерацию для страниц с API
+  serverExternalPackages: ['strapi-blocks-parser'],
   images: {
     remotePatterns: [
       {
