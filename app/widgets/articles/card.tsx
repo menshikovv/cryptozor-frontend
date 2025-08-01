@@ -89,7 +89,7 @@ export const ArticleCard = ({
         >
           <h3
             className={cn(
-              isLargeFinal ? 'text-xs' : 'tablet-small:text-[10px] text-[9px]',
+              isLargeFinal ? 'text-sm' : 'tablet-small:text-xs text-[10px]',
               'line-clamp-3 leading-tight font-semibold text-white uppercase',
             )}
           >

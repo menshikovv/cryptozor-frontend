@@ -36,7 +36,15 @@ export async function generateMetadata({
 
   const article = await getArticle(slug)
 
-  if (!article || !article.seo) return null
+  if (!article || !article.seo) {
+    return {
+      title: 'Страница не найдена',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    }
+  }
 
   const { seo } = article
 
@@ -68,11 +76,14 @@ export default async function ArticleWrapper({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  if (!slug) return null
+  if (!slug) return notFound()
 
   const article = await getArticle(slug)
-  console.log(article )
-  if (!article) return null
+  
+  if (!article) {
+    return notFound()
+  }
+  
   const reactions = await getReactions(article.documentId)
   const views = await getArticleViews(article.documentId)
   const relatedArticles = await getRelatedArticles(article.tags, article.id)
@@ -90,37 +101,7 @@ export default async function ArticleWrapper({
   )
 }
 
-async function _ArticleContent({ slug }: { slug: string }) {
-  const article = await getArticle(slug)
-  if (!article) return notFound()
-  const reactions = await getReactions(article.documentId)
-  const views = await getArticleViews(article.documentId)
-  const relatedArticles = await getRelatedArticles(article.tags, article.id)
 
-  if (!article) return null
-
-  const headersList = await headers()
-  const referer = headersList.get('referer') ?? null
-
-  return (
-    <div className="relative flex flex-col gap-5">
-      <LinkPath
-        views={views}
-        reactions={reactions}
-        referer={referer}
-        article={article}
-        slug={slug}
-      />
-
-      {relatedArticles.length > 0 && (
-        <div className={'tablet-small:mb-32 my-6 mb-14 flex flex-col gap-4'}>
-          <h3 className={'text-lg font-medium'}>Читайте также</h3>
-          <RelatedArticlesList articles={relatedArticles} />
-        </div>
-      )}
-    </div>
-  )
-}
 
 function RelatedArticlesList({ articles }: { articles: any[] }) {
   const [first, second, ...rest] = articles

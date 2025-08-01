@@ -24,13 +24,22 @@ const inter = Inter({ subsets: ['latin'] })
 
 async function getGlobal() {
   try {
+    if (!API_URL) {
+      console.warn('API_URL is not defined')
+      return {}
+    }
+    
     const res = await fetch(`${API_URL}/global?populate=favicon&populate=seo&populate=seo.og_image`, {
       next: { revalidate: 1 },
     })
-    if (!res.ok) return {}
+    if (!res.ok) {
+      console.warn(`Failed to fetch global data: ${res.status}`)
+      return {}
+    }
     const json = await res.json()
     return json?.data || {}
-  } catch {
+  } catch (error) {
+    console.error('Error fetching global data:', error)
     return {}
   }
 }
@@ -52,16 +61,16 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords: seo?.meta_keywords?.split(',').map((k: string) => k.trim()),
 
     openGraph: {
-      title: seo?.og_title,
+      title: seo?.og_title || 'CryptoZor.Ru',
       type: seo?.og_type || 'website',
       url: seo?.og_url,
-      description: seo?.og_description,
+      description: seo?.og_description || 'Новости и статьи о технологиях, бизнесе и инновациях',
       images: seo?.og_image?.url ? [
         {
           url: `${BASE_URL}${seo.og_image.url}`,
           width: seo.og_image.width,
           height: seo.og_image.height,
-          alt: seo.og_image.alternativeText || seo?.og_title,
+          alt: seo.og_image.alternativeText || seo?.og_title || 'CryptoZor.Ru',
         }
       ] : undefined,
     },

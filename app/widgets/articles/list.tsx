@@ -109,7 +109,7 @@ function Pagination({
                 onClick={() => onPageChange(page as number)}
                 className={`flex items-center justify-center w-8 h-8 rounded-full font-medium text-base transition-all duration-200 ${
                   currentPage === page
-                    ? 'bg-purple-600 text-white'
+                    ? 'bg-green-700 text-white'
                     : 'text-white hover:text-white/80'
                 }`}
               >

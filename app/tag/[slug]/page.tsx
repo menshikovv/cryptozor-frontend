@@ -9,13 +9,21 @@ import ArticlesList from '@/app/widgets/articles/list'
 import { notFound } from 'next/navigation'
 
 async function getTag(slug: string) {
-  const res = await fetch(
-    `${API_URL}/tags?filters[slug][$eq]=${slug}&populate[icon][populate]&populate[wallpaper][populate]&populate[seo][populate]=og_image`,
-    { next: { revalidate: 100 } },
-  )
-  if (!res.ok) throw new Error('Failed to fetch tag')
-  const json = await res.json()
-  return json.data[0]
+  try {
+    const res = await fetch(
+      `${API_URL}/tags?filters[slug][$eq]=${slug}&populate[icon][populate]&populate[wallpaper][populate]&populate[seo][populate]=og_image`,
+      { next: { revalidate: 100 } },
+    )
+    if (!res.ok) {
+      console.error(`Failed to fetch tag with slug: ${slug}, status: ${res.status}`)
+      return null
+    }
+    const json = await res.json()
+    return json.data[0]
+  } catch (error) {
+    console.error(`Error fetching tag with slug: ${slug}`, error)
+    return null
+  }
 }
 
 async function getTags() {
@@ -44,7 +52,15 @@ export async function generateMetadata({
 
   const tag = await getTag(slug)
 
-  if (!tag?.seo) return null
+  if (!tag?.seo) {
+    return {
+      title: 'Страница не найдена',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    }
+  }
 
   const { seo } = tag
 

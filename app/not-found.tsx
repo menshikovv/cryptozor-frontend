@@ -2,6 +2,10 @@
 import { Button } from '@/app/shared/ui/button'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { metadata } from './not-found-metadata'
+
+// Экспортируем метаданные для предотвращения индексации
+export { metadata }
 
 export default function NotFound() {
   const [showNotification, setShowNotification] = useState(false)
