@@ -246,7 +246,7 @@ export default function ArticlesList({
   if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="w-12 h-12 rounded-full border-4 border-transparent border-t-purple-500 border-r-purple-500 animate-spin"></div>
+        <div className="w-12 h-12 rounded-full border-4 border-transparent border-t-green-500 border-r-green-500 animate-spin"></div>
       </div>
     )
   }
